@@ -78,7 +78,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     fit: BoxFit.contain,
                                   ),
                                   Transform.translate(
-                                    offset: Offset(0, isTablet ? -16 : -26),
+                                    offset: Offset(0, isTablet ? -5 : -8),
                                     child: Image.asset(
                                       AppLanguageConfig.languageBadgeAsset,
                                       width: badgeWidth,
