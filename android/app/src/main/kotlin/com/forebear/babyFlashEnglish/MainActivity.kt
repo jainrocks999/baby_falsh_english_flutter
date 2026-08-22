@@ -1,4 +1,4 @@
-package com.baby_flash_apps
+package com.forebear.babyFlashEnglish
 
 import io.flutter.embedding.android.FlutterActivity
 
