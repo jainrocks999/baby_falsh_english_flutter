@@ -6,13 +6,24 @@ enum AppLanguage {
   spanish,
 }
 
+class AppAdUnits {
+  final String bannerAndroid;
+  final String bannerIos;
+  final String interstitialAndroid;
+  final String interstitialIos;
+
+  const AppAdUnits({
+    required this.bannerAndroid,
+    required this.bannerIos,
+    required this.interstitialAndroid,
+    required this.interstitialIos,
+  });
+}
+
 /// Change [language] once, then build the APK.
-///
-/// English  → `AppLanguage.english`
-/// French   → `AppLanguage.french`
-/// Italian  → `AppLanguage.italian`
-/// Japanese → `AppLanguage.japanese`
-/// Spanish  → `AppLanguage.spanish`
+
+/// This sets table, badge, and ad unit IDs automatically.
+/// Android Manifest `APPLICATION_ID` still set manually.
 class AppLanguageConfig {
   /// 👇 Only this line needs to change before a new APK build.
   static const AppLanguage language = AppLanguage.english;
@@ -53,4 +64,44 @@ class AppLanguageConfig {
         return 'assets/images/languages/spanish.png';
     }
   }
+
+  static const Map<AppLanguage, AppAdUnits> adUnits = {
+    AppLanguage.english: AppAdUnits(
+      bannerAndroid: 'ca-app-pub-6121378252341914/7864197042',
+      bannerIos: 'ca-app-pub-6121378252341914/6304074496',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/8298261569',
+      interstitialIos: 'ca-app-pub-6121378252341914/9445243157',
+    ),
+    AppLanguage.french: AppAdUnits(
+      bannerAndroid: 'PASTE_FRENCH_BANNER_ANDROID',
+      bannerIos: 'PASTE_FRENCH_BANNER_IOS',
+      interstitialAndroid: 'PASTE_FRENCH_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_FRENCH_INTERSTITIAL_IOS',
+    ),
+    AppLanguage.italian: AppAdUnits(
+      bannerAndroid: 'PASTE_ITALIAN_BANNER_ANDROID',
+      bannerIos: 'PASTE_ITALIAN_BANNER_IOS',
+      interstitialAndroid: 'PASTE_ITALIAN_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_ITALIAN_INTERSTITIAL_IOS',
+    ),
+    AppLanguage.japanese: AppAdUnits(
+      bannerAndroid: 'PASTE_JAPANESE_BANNER_ANDROID',
+      bannerIos: 'PASTE_JAPANESE_BANNER_IOS',
+      interstitialAndroid: 'PASTE_JAPANESE_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_JAPANESE_INTERSTITIAL_IOS',
+    ),
+    AppLanguage.spanish: AppAdUnits(
+      bannerAndroid: 'PASTE_SPANISH_BANNER_ANDROID',
+      bannerIos: 'PASTE_SPANISH_BANNER_IOS',
+      interstitialAndroid: 'PASTE_SPANISH_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_SPANISH_INTERSTITIAL_IOS',
+    ),
+  };
+
+  static AppAdUnits get currentAds => adUnits[language]!;
+
+  static String get bannerAdId => currentAds.bannerAndroid;
+  static String get bannerAdIdIOS => currentAds.bannerIos;
+  static String get interstitialAdId => currentAds.interstitialAndroid;
+  static String get interstitialAdIdIOS => currentAds.interstitialIos;
 }

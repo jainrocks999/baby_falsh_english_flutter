@@ -1,8 +1,8 @@
+import 'package:baby_flash_apps/core/constants/app_language.dart';
+
 class AdsUnitKey {
-  static const String bannerAdId = 'ca-app-pub-6121378252341914/7864197042';
-  static const String bannerAdIdIOS = 'ca-app-pub-6121378252341914/6304074496';
-  // static const String bannerAdId = 'ca-app-pub-3940256099942544/6300978111';
-  static const String interstitalAdId = 'ca-app-pub-6121378252341914/8298261569';
-  static const String interstitalAdIdIOS = 'ca-app-pub-6121378252341914/9445243157';
-  // static const String interstitalAdId = 'ca-app-pub-3940256099942544/1033173712';
+  static String get bannerAdId => AppLanguageConfig.bannerAdId;
+  static String get bannerAdIdIOS => AppLanguageConfig.bannerAdIdIOS;
+  static String get interstitalAdId => AppLanguageConfig.interstitialAdId;
+  static String get interstitalAdIdIOS => AppLanguageConfig.interstitialAdIdIOS;
 }
