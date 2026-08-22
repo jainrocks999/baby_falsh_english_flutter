@@ -38,4 +38,19 @@ class AppLanguageConfig {
 
   /// Native word label on flashcards. Off for English APK.
   static bool get showLanguageText => language != AppLanguage.english;
+
+  static String get languageBadgeAsset {
+    switch (language) {
+      case AppLanguage.english:
+        return 'assets/images/languages/english.png';
+      case AppLanguage.french:
+        return 'assets/images/languages/french.png';
+      case AppLanguage.italian:
+        return 'assets/images/languages/italian.png';
+      case AppLanguage.japanese:
+        return 'assets/images/languages/japanese.png';
+      case AppLanguage.spanish:
+        return 'assets/images/languages/spanish.png';
+    }
+  }
 }

@@ -14,7 +14,7 @@ class MusicService {
   static final AudioContext backgroundMusicAudioContext = AudioContext(
     android: AudioContextAndroid(
       isSpeakerphoneOn: true,
-      stayAwake: true,
+      stayAwake: false,
       contentType: AndroidContentType.music,
       usageType: AndroidUsageType.media,
       audioFocus: AndroidAudioFocus.none,

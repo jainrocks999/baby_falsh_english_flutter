@@ -1,4 +1,5 @@
 import 'package:baby_flash_apps/ads/banner_ad.dart';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/services/music_services.dart';
@@ -45,6 +46,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         });
 
         final bool isTablet = ResponsiveUtils.isTablet(context);
+        final logoWidth = ResponsiveUtils.widthPercent(
+          context,
+          isTablet ? 40 : 65,
+        );
+        final badgeWidth = ResponsiveUtils.widthPercent(
+          context,
+          isTablet ? 22 : 30,
+        );
         return Scaffold(
           body: AppBackground(
             child: Stack(
@@ -59,17 +68,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           spacing: 20,
                           children: [
                             SizedBox(
-                              child: Image.asset(
-                                "assets/images/app_name.png",
-                                width: ResponsiveUtils.widthPercent(
-                                  context,
-                                  isTablet ? 40 : 65,
-                                ),
+                              width: logoWidth,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/app_name.png',
+                                    width: logoWidth,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  Transform.translate(
+                                    offset: Offset(0, isTablet ? -16 : -26),
+                                    child: Image.asset(
+                                      AppLanguageConfig.languageBadgeAsset,
+                                      width: badgeWidth,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            isTablet
-                                ? HomeCardGridlist()
-                                : HomeCardBasiclist(),
+
+                            isTablet ? HomeCardGridlist() : HomeCardBasiclist(),
                           ],
                         ),
                       ),
