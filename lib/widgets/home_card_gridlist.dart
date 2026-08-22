@@ -1,4 +1,5 @@
 import 'package:baby_flash_apps/core/constants/app_colors.dart';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/core/constants/category.dart';
 import 'package:baby_flash_apps/core/utils/helper.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
@@ -9,9 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeCardGridlist extends ConsumerWidget {
-  final bool isJapanese;
-
-  const HomeCardGridlist({super.key, required this.isJapanese});
+  const HomeCardGridlist({super.key});
 
   void handleOnPress({
     required BuildContext context,
@@ -27,23 +26,21 @@ class HomeCardGridlist extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(dbProvider);
+    final cards = AppLanguageConfig.hideAlphabetCategory
+        ? homeCardList.where((item) => item.category != 'Alphabet').toList()
+        : homeCardList;
 
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: homeCardList.length,
+      itemCount: cards.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        // crossAxisSpacing: 3,
         mainAxisSpacing: 20,
         childAspectRatio: 1.25,
       ),
       itemBuilder: (context, index) {
-        final item = homeCardList[index];
-
-        if (isJapanese && item.category == 'Alphabet') {
-          return const SizedBox.shrink();
-        }
+        final item = cards[index];
 
         return HomeCards(
           imagePath: item.imagePath,

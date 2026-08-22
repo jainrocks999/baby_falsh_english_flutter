@@ -19,7 +19,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool sound = false;
   bool randomOrder = false;
   bool swipe = false;
-  bool languageText = false;
 
   @override
   void initState() {
@@ -32,14 +31,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final musicValue = await SecureStorage.getMusic();
     final soundValue = await SecureStorage.getSound();
     final swipeValue = await SecureStorage.getSwipe();
-    final languageTextValue = await SecureStorage.getLangText();
 
     setState(() {
       questionMode = questionModeValue;
       music = musicValue;
       sound = soundValue;
       swipe = swipeValue;
-      languageText = languageTextValue;
     });
   }
 
@@ -54,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onPopInvokedWithResult: (didPop, result) {
             if (didPop) {
               Future.microtask(() async {
-                await ref.read(dbProvider.notifier).loadSoundAndLangSettings();
+                await ref.read(dbProvider.notifier).loadSoundSettings();
               });
             }
           },
@@ -107,38 +104,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       height: ResponsiveUtils.height(
                         context,
                         isTablet ? 0.5 : 0.5,
-                      ),
-                    ),
-                    SettingContainer(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: ResponsiveUtils.width(
-                          context,
-                          isTablet ? 1 : 0,
-                        ),
-                      ),
-                      child: Column(
-                        spacing: ResponsiveUtils.height(
-                          context,
-                          isTablet ? 3 : 1.5,
-                        ),
-                        children: [
-                          _RowDropdown(questionMode: questionMode),
-                          Opacity(
-                            opacity: questionMode ? 0.5 : 1,
-                            child: _SwitchRow(
-                              icon: Icons.subtitles,
-                              title: "Language Text",
-                              value: languageText,
-                              onChanged: questionMode
-                                  ? null
-                                  : (val) async {
-                                      setState(() => languageText = val);
-                                      await SecureStorage.setLangText(val);
-                                    },
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                     SettingContainer(
@@ -255,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               onPressed: () async {
                                 await ref
                                     .read(dbProvider.notifier)
-                                    .loadSoundAndLangSettings();
+                                    .loadSoundSettings();
                                 if (!context.mounted) return;
                                 Navigator.pop(context);
                               },
@@ -271,102 +236,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class _RowDropdown extends ConsumerStatefulWidget {
-  final bool questionMode;
-  const _RowDropdown({required this.questionMode});
-
-  @override
-  ConsumerState<_RowDropdown> createState() => _RowDropdownState();
-}
-
-class _RowDropdownState extends ConsumerState<_RowDropdown> {
-  final List<Map<String, String>> languages = [
-    {'label': 'English', 'value': 'tbl_items'},
-    {'label': 'French', 'value': 'tbl_french'},
-    {'label': 'Italian', 'value': 'tbl_italian'},
-    {'label': 'Japanese', 'value': 'tbl_japanies'}, //(tbl_japanese) fixed typo
-    {'label': 'Spanish', 'value': 'tbl_spanish'},
-  ];
-
-  Future<void> _onLanChanged(String newValue) async {
-    await SecureStorage.setLang(newValue);
-    await ref.read(dbProvider.notifier).loadLanguage();
-  }
-
-  Future<void> _forceEnglish() async {
-    await SecureStorage.setLang("tbl_items");
-    await ref.read(dbProvider.notifier).loadLanguage();
-  }
-
-  @override
-  void didUpdateWidget(covariant _RowDropdown oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.questionMode && !oldWidget.questionMode) {
-      _forceEnglish();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isTablet = ResponsiveUtils.isTablet(context);
-    final state = ref.watch(dbProvider);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          spacing: 5,
-          children: [
-            Icon(
-              Icons.translate_rounded,
-              size: ResponsiveUtils.fontSize(context, isTablet ? 3.8 : 5),
-            ),
-            Text(
-              "Language",
-              style: TextStyle(
-                // fontSize: 18,
-                fontSize: ResponsiveUtils.fontSize(context, isTablet ? 3.8 : 5),
-                fontFamily: 'Fredoka',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ],
-        ),
-        DropdownButton<String>(
-          value: state.language,
-          underline: const SizedBox(),
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            size: ResponsiveUtils.width(context, isTablet ? 3.5 : 4.8),
-          ),
-          dropdownColor: Color(0xfff7cd89),
-          borderRadius: BorderRadius.circular(20),
-          style: TextStyle(
-            color: widget.questionMode ? Colors.grey : Colors.black,
-            // fontSize: 16,
-            fontSize: ResponsiveUtils.fontSize(context, isTablet ? 3.5 : 4.7),
-            fontFamily: 'Fredoka',
-            fontWeight: FontWeight.w500,
-          ),
-          onChanged: widget.questionMode
-              ? null
-              : (String? newValue) {
-                  if (newValue != null) {
-                    _onLanChanged(newValue);
-                  }
-                },
-          items: languages.map((lang) {
-            return DropdownMenuItem<String>(
-              value: lang['value'],
-              child: Text(lang['label']!),
-            );
-          }).toList(),
-        ),
-      ],
     );
   }
 }

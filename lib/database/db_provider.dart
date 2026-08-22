@@ -1,3 +1,4 @@
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/database/db_repository.dart';
 import 'package:baby_flash_apps/services/secure_storage.dart';
 import 'package:flutter/widgets.dart';
@@ -12,7 +13,6 @@ class DbState {
   final String? message;
   final bool isSuccess;
   final List<Map<String, dynamic>> data;
-  final String? language;
   final Map<String, int> categoryCounts;
   final bool questionMode;
   final bool isSoundOn;
@@ -25,7 +25,6 @@ class DbState {
     this.message,
     this.isSuccess = false,
     this.data = const [],
-    this.language,
     this.categoryCounts = const {},
     this.questionMode = false,
     this.isSoundOn = false,
@@ -39,7 +38,6 @@ class DbState {
     String? message,
     bool? isSuccess,
     List<Map<String, dynamic>>? data,
-    String? language,
     Map<String, int>? categoryCounts,
     bool? questionMode,
     bool? isSoundOn,
@@ -52,7 +50,6 @@ class DbState {
       message: message,
       isSuccess: isSuccess ?? this.isSuccess,
       data: data ?? this.data,
-      language: language ?? this.language,
       categoryCounts: categoryCounts ?? this.categoryCounts,
       questionMode: questionMode ?? this.questionMode,
       isSoundOn: isSoundOn ?? this.isSoundOn,
@@ -65,7 +62,10 @@ class DbState {
 
 class DbNotifier extends StateNotifier<DbState> {
   final DbRepository repository;
-  DbNotifier(this.repository) : super(const DbState());
+  DbNotifier(this.repository)
+    : super(
+        DbState(isShowLangTxt: AppLanguageConfig.showLanguageText),
+      );
 
   ///clear the state
   void clearData() {
@@ -75,15 +75,6 @@ class DbNotifier extends StateNotifier<DbState> {
       message: null,
       isSuccess: false,
     );
-  }
-
-  Future<void> loadLanguage() async {
-    try {
-      String? lang = await SecureStorage.getLang();
-      state = state.copyWith(language: lang);
-    } catch (e) {
-      debugPrint("Error loading language: $e");
-    }
   }
 
   Future<void> loadQuestionMode() async {
@@ -96,17 +87,16 @@ class DbNotifier extends StateNotifier<DbState> {
     }
   }
 
-  Future<void> loadSoundAndLangSettings() async {
+  Future<void> loadSoundSettings() async {
     try {
       final valueMusic = await SecureStorage.getMusic();
       final valueSound = await SecureStorage.getSound();
-      final valueLangTxt = await SecureStorage.getLangText();
       final valueSwipe = await SecureStorage.getSwipe();
       state = state.copyWith(
         isMusicOn: valueMusic,
         isSoundOn: valueSound,
-        isShowLangTxt: valueLangTxt,
-        isSwpieOn:valueSwipe
+        isShowLangTxt: AppLanguageConfig.showLanguageText,
+        isSwpieOn: valueSwipe,
       );
     } catch (e) {
       state = state.copyWith(message: e.toString());
@@ -114,12 +104,10 @@ class DbNotifier extends StateNotifier<DbState> {
   }
 
   Future<void> fetchData({
-    String? tableName,
     String? category,
     bool random = false,
     int limit = 0,
   }) async {
-    // state = state.copyWith(isLoading: true, message: null);
     state = state.copyWith(
       isLoading: true,
       message: null,
@@ -128,13 +116,8 @@ class DbNotifier extends StateNotifier<DbState> {
     );
 
     try {
-      String? storedLang = await SecureStorage.getLang();
-      if (storedLang == null || storedLang.isEmpty) {
-        storedLang = 'tbl_items'; // default English
-        await SecureStorage.setLang(storedLang);
-      }
       final result = await repository.fetchData(
-        tableName: storedLang,
+        tableName: AppLanguageConfig.tableName,
         category: category,
         random: random,
         limit: limit,
@@ -152,10 +135,11 @@ class DbNotifier extends StateNotifier<DbState> {
 
   Future<void> loadCateCounts() async {
     try {
-      final tableName = state.language ?? 'tbl_items';
       state = state.copyWith(isLoading: true);
 
-      final result = await repository.getCategoryCounts(tableName: tableName);
+      final result = await repository.getCategoryCounts(
+        tableName: AppLanguageConfig.tableName,
+      );
       state = state.copyWith(
         isLoading: false,
         categoryCounts: result,

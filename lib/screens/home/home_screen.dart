@@ -3,7 +3,6 @@ import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/services/music_services.dart';
 import 'package:baby_flash_apps/widgets/app_background.dart';
-import 'package:baby_flash_apps/widgets/ask_language.dart';
 import 'package:baby_flash_apps/widgets/home_card_basiclist.dart';
 import 'package:baby_flash_apps/widgets/home_card_gridlist.dart';
 import 'package:baby_flash_apps/widgets/topbar.dart';
@@ -18,30 +17,13 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  bool _isModalShown = false;
-
-  void _openLanguageModal(String? language) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      isDismissible: false,
-      enableDrag: false,
-      builder: (context) {
-        return LanguageSelectionModal(
-          selectedLanguage: language ?? 'tbl_items',
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
     Future.microtask(() async {
       await ref.read(dbProvider.notifier).loadCateCounts();
       await ref.read(dbProvider.notifier).loadQuestionMode();
-      await ref.read(dbProvider.notifier).loadSoundAndLangSettings();
+      await ref.read(dbProvider.notifier).loadSoundSettings();
       if (!mounted) return;
     });
   }
@@ -50,7 +32,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final state = ref.watch(dbProvider);
         ref.listen(dbProvider, (prev, next) {
           if (prev?.isMusicOn == next.isMusicOn) {
             return;
@@ -63,14 +44,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           }
         });
 
-        final isJapanese = state.language?.contains('japanies') ?? false;
-        if (state.language == null && !_isModalShown) {
-          _isModalShown = true;
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _openLanguageModal(state.language);
-          });
-        }
         final bool isTablet = ResponsiveUtils.isTablet(context);
         return Scaffold(
           body: AppBackground(
@@ -95,8 +68,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                             isTablet
-                                ? HomeCardGridlist(isJapanese: isJapanese)
-                                : HomeCardBasiclist(isJapanese: isJapanese),
+                                ? HomeCardGridlist()
+                                : HomeCardBasiclist(),
                           ],
                         ),
                       ),

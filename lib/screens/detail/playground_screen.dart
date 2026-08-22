@@ -42,7 +42,7 @@ class _PlaygroundScreenState extends ConsumerState<PlaygroundScreen> {
 
     Future.microtask(() async {
       await ref.read(dbProvider.notifier).fetchData(category: widget.category);
-      await ref.read(dbProvider.notifier).loadSoundAndLangSettings();
+      await ref.read(dbProvider.notifier).loadSoundSettings();
     });
   }
 

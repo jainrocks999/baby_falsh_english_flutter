@@ -1,4 +1,5 @@
 import 'package:baby_flash_apps/core/constants/app_colors.dart';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/core/constants/category.dart';
 import 'package:baby_flash_apps/core/utils/helper.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
@@ -9,9 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeCardBasiclist extends ConsumerWidget {
-  final bool isJapanese;
-
-  const HomeCardBasiclist({super.key, required this.isJapanese});
+  const HomeCardBasiclist({super.key});
 
   void handleOnPress({
     required BuildContext context,
@@ -27,17 +26,17 @@ class HomeCardBasiclist extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(dbProvider);
+    final cards = AppLanguageConfig.hideAlphabetCategory
+        ? homeCardList.where((item) => item.category != 'Alphabet').toList()
+        : homeCardList;
 
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: homeCardList.length,
+      itemCount: cards.length,
       itemBuilder: (context, index) {
-        final item = homeCardList[index];
+        final item = cards[index];
 
-        if (isJapanese && item.category == 'Alphabet') {
-          return const SizedBox.shrink();
-        }
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: HomeCards(

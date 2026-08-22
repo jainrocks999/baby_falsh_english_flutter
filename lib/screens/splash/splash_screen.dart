@@ -1,19 +1,17 @@
-import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/router/route_paths.dart';
 import 'package:baby_flash_apps/services/app_update_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 
-class SplashScreen extends ConsumerStatefulWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _controller;
 
   final AppUpdateServices _appUpdateServices = AppUpdateServices();
@@ -25,14 +23,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initLang();
     _initializeSplashVideo();
 
     _checkForAppUpdate();
-  }
-
-  Future<void> _initLang() async {
-    await ref.read(dbProvider.notifier).loadLanguage();
   }
 
   Future<void> _checkForAppUpdate() async {
