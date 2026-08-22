@@ -67,9 +67,9 @@ class AppLanguageConfig {
 
   static const Map<AppLanguage, AppAdUnits> adUnits = {
     AppLanguage.english: AppAdUnits(
-      bannerAndroid: 'ca-app-pub-6121378252341914/7864197042',
+      bannerAndroid: 'ca-app-pub-6121378252341914/4051590879',
       bannerIos: 'ca-app-pub-6121378252341914/6304074496',
-      interstitialAndroid: 'ca-app-pub-6121378252341914/8298261569',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/5444563592',
       interstitialIos: 'ca-app-pub-6121378252341914/9445243157',
     ),
     AppLanguage.french: AppAdUnits(
