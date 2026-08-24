@@ -73,10 +73,10 @@ class AppLanguageConfig {
       interstitialIos: 'ca-app-pub-6121378252341914/9445243157',
     ),
     AppLanguage.french: AppAdUnits(
-      bannerAndroid: 'PASTE_FRENCH_BANNER_ANDROID',
-      bannerIos: 'PASTE_FRENCH_BANNER_IOS',
-      interstitialAndroid: 'PASTE_FRENCH_INTERSTITIAL_ANDROID',
-      interstitialIos: 'PASTE_FRENCH_INTERSTITIAL_IOS',
+      bannerAndroid: 'ca-app-pub-6121378252341914/7439000680',
+      bannerIos: 'ca-app-pub-6121378252341914/9053238758',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/1509840988',
+      interstitialIos: 'ca-app-pub-6121378252341914/2139406698',
     ),
     AppLanguage.italian: AppAdUnits(
       bannerAndroid: 'PASTE_ITALIAN_BANNER_ANDROID',
