@@ -20,50 +20,29 @@ class _BannerAdSectionState extends State<BannerAdSection> {
   int _retryCount = 0;
 
   final List<Duration> _retryDelays = [
+    const Duration(seconds: 30),
     const Duration(seconds: 1),
     const Duration(seconds: 2),
     const Duration(seconds: 5),
-    const Duration(seconds: 30),
   ];
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadBannerAd();
-    });
+    _loadBannerAd();
   }
 
-  Future<void> _loadBannerAd() async {
+  void _loadBannerAd() {
     if (!mounted) return;
 
     _retryTimer?.cancel();
     _retryTimer = null;
 
-    // Get available screen width.
-    final screenWidth = MediaQuery.sizeOf(context).width;
-
-    // Get adaptive banner size based on available width.
-    final adSize =
-        await AdSize.getLargeAnchoredAdaptiveBannerAdSize(
-      screenWidth.truncate(),
-    );
-
-    if (!mounted || adSize == null) {
-      debugPrint('Could not determine adaptive banner size.');
-      return;
-    }
-
-    debugPrint(
-      'Loading adaptive banner: '
-      '${adSize.width}x${adSize.height}',
-    );
-
     final banner = BannerAd(
       adUnitId: Platform.isIOS
           ? AdsUnitKey.bannerAdIdIOS
           : AdsUnitKey.bannerAdId,
-      size: adSize,
+      size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (ad) {
@@ -72,20 +51,14 @@ class _BannerAdSectionState extends State<BannerAdSection> {
             return;
           }
 
-          final bannerAd = ad as BannerAd;
-
           _retryTimer?.cancel();
           _retryTimer = null;
 
           _retryCount = 0;
-
-          debugPrint(
-            'Banner ad loaded successfully: '
-            '${bannerAd.size.width}x${bannerAd.size.height}',
-          );
+          debugPrint('Banner ad loaded successfully');
 
           setState(() {
-            _bannerAd = bannerAd;
+            _bannerAd = ad as BannerAd;
             _isLoaded = true;
           });
         },
@@ -95,7 +68,6 @@ class _BannerAdSectionState extends State<BannerAdSection> {
             'Banner ad failed: '
             '${error.code} - ${error.message}',
           );
-
           ad.dispose();
 
           if (!mounted) return;
@@ -107,27 +79,10 @@ class _BannerAdSectionState extends State<BannerAdSection> {
 
           _scheduleRetry();
         },
-
-        onAdOpened: (ad) {
-          debugPrint('Banner ad opened');
-        },
-
-        onAdClosed: (ad) {
-          debugPrint('Banner ad closed');
-        },
-
-        onAdImpression: (ad) {
-          debugPrint('Banner ad impression recorded');
-        },
       ),
     );
-
-    // Dispose previous ad before assigning new one.
     _bannerAd?.dispose();
-
     _bannerAd = banner;
-    _isLoaded = false;
-
     banner.load();
   }
 
@@ -140,11 +95,7 @@ class _BannerAdSectionState extends State<BannerAdSection> {
     }
 
     final delay = _retryDelays[_retryCount];
-
-    debugPrint(
-      'Retrying banner ad in ${delay.inSeconds} seconds...',
-    );
-
+    debugPrint('Retrying banner ad in ${delay.inSeconds} seconds...');
     _retryCount++;
 
     _retryTimer?.cancel();
@@ -163,7 +114,6 @@ class _BannerAdSectionState extends State<BannerAdSection> {
 
     _bannerAd?.dispose();
     _bannerAd = null;
-
     super.dispose();
   }
 
@@ -174,11 +124,9 @@ class _BannerAdSectionState extends State<BannerAdSection> {
     }
 
     return SizedBox(
-      width: double.infinity,
+      width: _bannerAd!.size.width.toDouble(),
       height: _bannerAd!.size.height.toDouble(),
-      child: AdWidget(
-        ad: _bannerAd!,
-      ),
+      child: AdWidget(ad: _bannerAd!),
     );
   }
 }
