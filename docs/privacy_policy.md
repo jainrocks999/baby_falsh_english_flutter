@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Baby Flash Apps**  
+**Baby Flash French**  
 **Effective Date:** August 22, 2026
 
 **Company:** Forebear Productions  
@@ -10,7 +10,7 @@
 
 Forebear Productions (“we”, “us”, “our”) respects your privacy. This Privacy Policy explains how information is handled when you use our apps.
 
-This policy applies to **Baby Flash Apps** and all current and future language editions of the same app family, including English, French, Italian, Japanese, Spanish, Arabic, and any other language edition we publish under the Baby Flash Apps name.
+This policy applies to **Baby Flash French** and all current and future language editions of the same app family, including English, French, Italian, Japanese, Spanish, Arabic, and any other language edition we publish under the Baby Flash French name.
 
 It also applies to related educational apps published by Forebear Productions in the same app family, unless that app provides its own privacy policy.
 
@@ -18,7 +18,7 @@ It also applies to related educational apps published by Forebear Productions in
 
 ## 1. Who this app is for
 
-Baby Flash Apps is a children’s learning app with flashcards, pictures, and audio. It is intended for children, used with a parent or guardian.
+Baby Flash French is a children’s learning app with flashcards, pictures, and audio. It is intended for children, used with a parent or guardian.
 
 We do not ask children or parents to create an account. We do not knowingly collect personal information such as name, email address, phone number, or photos.
 
@@ -155,7 +155,7 @@ We do not collect personal accounts. Ads are loaded over the device’s network 
 
 ## 10. Related apps
 
-Forebear Productions may publish other children’s learning apps related to Baby Flash Apps, including other languages or similar flashcard apps.
+Forebear Productions may publish other children’s learning apps related to Baby Flash French, including other languages or similar flashcard apps.
 
 Unless an app shows a different privacy policy, this Privacy Policy applies to those related apps as well. Those apps may also use Google AdMob banner and interstitial ads with child-directed settings.
 

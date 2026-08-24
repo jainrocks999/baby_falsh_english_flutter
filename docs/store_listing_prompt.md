@@ -12,7 +12,7 @@ SEO here means **App Store Optimization (ASO)**: rank for parent search queries 
 
 ## Product facts
 
-- Brand / current English name: **Baby Flash Apps**
+- Brand / current English name: **Baby Flash French**
 - Audience: babies, toddlers, preschool kids (ages 1–6) and their parents
 - What the app does: colorful flashcards with images + spoken audio to teach first words
 - Categories inside the app:
@@ -101,7 +101,7 @@ For **each app**, output:
 ### Title SEO
 - Put the **primary keyword** as close to the start as possible.
 - Formula: `Primary Keyword + Brand/Benefit`
-- Example style: `Baby Flashcards - First Words` not `Baby Flash Apps Official`
+- Example style: `Baby Flashcards - First Words` not `Baby Flash French Official`
 - Unique per language. Do not use the same English title for all 5.
 - No stuffing. Must still read like a real app name.
 

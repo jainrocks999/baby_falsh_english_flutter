@@ -1,4 +1,4 @@
-# Baby Flash Apps - ASO Store Listings (5 apps, all copy in English)
+# Baby Flash French - ASO Store Listings (5 apps, all copy in English)
 
 
 ## 1) English
