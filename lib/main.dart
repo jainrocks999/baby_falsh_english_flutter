@@ -10,7 +10,7 @@ Future<void> main() async {
 
   final RequestConfiguration requestConfiguration = RequestConfiguration(
     maxAdContentRating: MaxAdContentRating.g,
-    tagForChildDirectedTreatment: TagForChildDirectedTreatment.yes,
+    ageRestrictedTreatment: AgeRestrictedTreatment.child,
   );
 
   await MobileAds.instance.updateRequestConfiguration(

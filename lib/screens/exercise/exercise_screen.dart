@@ -29,7 +29,7 @@ class _ExerciseScreenState extends ConsumerState<ExerciseScreen> {
   final Set<int> _usedIndexes = {};
   List<Map<String, dynamic>>? cachedRandomItems;
 
-  bool _isAdCompleted = false;
+
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _ExerciseScreenState extends ConsumerState<ExerciseScreen> {
   }
 
   void _showInterstitialBeforeActivity() {
-    if (_isAdCompleted) return;
+
     _interstitialAdService.showAd(
       onAdDismissed: () {
         if (!mounted) return;

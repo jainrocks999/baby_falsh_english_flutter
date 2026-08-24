@@ -134,7 +134,7 @@ void showCustomSnackBar({
                   Text(
                     subtitle,
                     style: TextStyle(
-                      color: textColor.withOpacity(0.8),
+                      color: textColor.withValues(alpha:0.8),
                       // color: Colors.black,
                     fontSize: 12,
                     fontFamily: 'Fredoka',
