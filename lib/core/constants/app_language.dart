@@ -26,7 +26,7 @@ class AppAdUnits {
 /// Android Manifest `APPLICATION_ID` still set manually.
 class AppLanguageConfig {
   /// 👇 Only this line needs to change before a new APK build.
-  static const AppLanguage language = AppLanguage.italian;
+  static const AppLanguage language = AppLanguage.japanese;
 
   static String get tableName {
     switch (language) {
@@ -85,9 +85,9 @@ class AppLanguageConfig {
       interstitialIos: 'ca-app-pub-6121378252341914/8966639111',
     ),
     AppLanguage.japanese: AppAdUnits(
-      bannerAndroid: 'PASTE_JAPANESE_BANNER_ANDROID',
+      bannerAndroid: 'ca-app-pub-6121378252341914~8507046486',
       bannerIos: 'PASTE_JAPANESE_BANNER_IOS',
-      interstitialAndroid: 'PASTE_JAPANESE_INTERSTITIAL_ANDROID',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/6974472960',
       interstitialIos: 'PASTE_JAPANESE_INTERSTITIAL_IOS',
     ),
     AppLanguage.spanish: AppAdUnits(
