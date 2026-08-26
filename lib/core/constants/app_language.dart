@@ -86,9 +86,9 @@ class AppLanguageConfig {
     ),
     AppLanguage.japanese: AppAdUnits(
       bannerAndroid: 'ca-app-pub-6121378252341914~8507046486',
-      bannerIos: 'PASTE_JAPANESE_BANNER_IOS',
+      bannerIos: 'ca-app-pub-6121378252341914~6357194163',
       interstitialAndroid: 'ca-app-pub-6121378252341914/6974472960',
-      interstitialIos: 'PASTE_JAPANESE_INTERSTITIAL_IOS',
+      interstitialIos: 'ca-app-pub-6121378252341914/8391391217',
     ),
     AppLanguage.spanish: AppAdUnits(
       bannerAndroid: 'PASTE_SPANISH_BANNER_ANDROID',
