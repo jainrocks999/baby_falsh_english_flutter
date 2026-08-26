@@ -85,8 +85,8 @@ class AppLanguageConfig {
       interstitialIos: 'ca-app-pub-6121378252341914/8966639111',
     ),
     AppLanguage.japanese: AppAdUnits(
-      bannerAndroid: 'ca-app-pub-6121378252341914~8507046486',
-      bannerIos: 'ca-app-pub-6121378252341914~6357194163',
+      bannerAndroid: 'ca-app-pub-6121378252341914/5880883146',
+      bannerIos: 'ca-app-pub-6121378252341914/5044112499',
       interstitialAndroid: 'ca-app-pub-6121378252341914/6974472960',
       interstitialIos: 'ca-app-pub-6121378252341914/8391391217',
     ),
