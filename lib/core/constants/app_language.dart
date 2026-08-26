@@ -26,7 +26,7 @@ class AppAdUnits {
 /// Android Manifest `APPLICATION_ID` still set manually.
 class AppLanguageConfig {
   /// 👇 Only this line needs to change before a new APK build.
-  static const AppLanguage language = AppLanguage.japanese;
+  static const AppLanguage language = AppLanguage.spanish;
 
   static String get tableName {
     switch (language) {
