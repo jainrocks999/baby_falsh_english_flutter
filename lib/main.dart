@@ -69,7 +69,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Baby Flash Japanese',
+      title: 'Baby Flash Spanish',
       routerConfig: appRouter,
     );
   }

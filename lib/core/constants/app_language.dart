@@ -91,10 +91,10 @@ class AppLanguageConfig {
       interstitialIos: 'ca-app-pub-6121378252341914/8391391217',
     ),
     AppLanguage.spanish: AppAdUnits(
-      bannerAndroid: 'PASTE_SPANISH_BANNER_ANDROID',
-      bannerIos: 'PASTE_SPANISH_BANNER_IOS',
-      interstitialAndroid: 'PASTE_SPANISH_INTERSTITIAL_ANDROID',
-      interstitialIos: 'PASTE_SPANISH_INTERSTITIAL_IOS',
+      bannerAndroid: 'ca-app-pub-6121378252341914~4989457973',
+      bannerIos: 'ca-app-pub-6121378252341914~6480784411',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/3874802378',
+      interstitialIos: 'ca-app-pub-6121378252341914/7119078666',
     ),
   };
 
