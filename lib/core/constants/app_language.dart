@@ -92,7 +92,7 @@ class AppLanguageConfig {
     ),
     AppLanguage.spanish: AppAdUnits(
       bannerAndroid: 'ca-app-pub-6121378252341914/5379455730',
-      bannerIos: 'ca-app-pub-6121378252341914~6480784411',
+      bannerIos: 'ca-app-pub-6121378252341914/1213864493',
       interstitialAndroid: 'ca-app-pub-6121378252341914/3874802378',
       interstitialIos: 'ca-app-pub-6121378252341914/7119078666',
     ),
