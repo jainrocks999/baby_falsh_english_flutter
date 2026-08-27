@@ -48,6 +48,15 @@ class AppHelpers {
     return value.replaceAll(' ', '_').replaceAll('-', '_');
   }
 
+  static List<String> soundAssetPaths(String folder, String fileName) {
+    final names = <String>{
+      fileName,
+      fileName.replaceAll('_', ' '),
+      fileName.replaceAll(' ', '_'),
+    };
+    return [for (final name in names) 'files/$folder/$name'];
+  }
+
   static String getModifiedImgName({
     required String image,
     required String langName,

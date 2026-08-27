@@ -1,8 +1,10 @@
+import 'package:baby_flash_apps/ads/ads_enabled.dart';
 import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/services/secure_storage.dart';
 import 'package:baby_flash_apps/widgets/custom_switch.dart';
 import 'package:baby_flash_apps/widgets/setting_container.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -133,12 +135,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             icon: Icons.graphic_eq_rounded,
                             title: "Sound",
                             value: sound,
-
                             onChanged: (val) async {
                               setState(() => sound = val);
                               await SecureStorage.setSound(val);
                             },
                           ),
+                          if (kDebugMode)
+                            ValueListenableBuilder<bool>(
+                              valueListenable: AdsEnabled.debugEnabled,
+                              builder: (context, adsOn, _) {
+                                return _SwitchRow(
+                                  icon: Icons.ad_units_rounded,
+                                  title: "Ads (debug)",
+                                  value: adsOn,
+                                  onChanged: (val) {
+                                    AdsEnabled.debugEnabled.value = val;
+                                  },
+                                );
+                              },
+                            ),
                         ],
                       ),
                     ),

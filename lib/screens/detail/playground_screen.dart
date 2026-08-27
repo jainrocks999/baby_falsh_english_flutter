@@ -324,10 +324,7 @@ class ImageSliderState extends State<ImageSlider> {
         if (actualSound != null) {
           try {
             if (token != _playToken) return;
-            await _audioPlayer.play(AssetSource('files/$langName/$actualSound'));
-            await _audioPlayer.onPlayerComplete.first.timeout(
-              const Duration(seconds: 8),
-            );
+            await _playFirstAvailable(langName, actualSound, token);
           } catch (e) {
             debugPrint("ActualSound error: $e");
           }
@@ -341,10 +338,7 @@ class ImageSliderState extends State<ImageSlider> {
 
         if (sound != null) {
           try {
-            await _audioPlayer.play(AssetSource('files/$langName/$sound'));
-            await _audioPlayer.onPlayerComplete.first.timeout(
-              const Duration(seconds: 8),
-            );
+            await _playFirstAvailable(langName, sound, token);
           } catch (e) {
             debugPrint("Sound error: $e");
           }
@@ -357,6 +351,25 @@ class ImageSliderState extends State<ImageSlider> {
         debugPrint("Audio error: $e");
       }
     });
+  }
+
+  Future<void> _playFirstAvailable(
+    String folder,
+    String fileName,
+    int token,
+  ) async {
+    for (final path in AppHelpers.soundAssetPaths(folder, fileName)) {
+      if (token != _playToken) return;
+      try {
+        await _audioPlayer.play(AssetSource(path));
+        await _audioPlayer.onPlayerComplete.first.timeout(
+          const Duration(seconds: 8),
+        );
+        return;
+      } catch (e) {
+        debugPrint("Sound skip $path: $e");
+      }
+    }
   }
 
   void nextPage() async {

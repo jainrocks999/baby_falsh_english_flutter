@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baby_flash_apps/ads/ads_enabled.dart';
 import 'package:baby_flash_apps/core/constants/ads_unit_key.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -12,6 +13,9 @@ class InterstitialAdService {
   VoidCallback? _pendingCallback;
 
   void loadAd() {
+    if (!AdsEnabled.isEnabled) {
+      return;
+    }
     if (_isLoading || _interstitialAd != null) {
       return;
     }
@@ -79,6 +83,10 @@ class InterstitialAdService {
   }
 
   void showAd({VoidCallback? onAdDismissed}) {
+    if (!AdsEnabled.isEnabled) {
+      onAdDismissed?.call();
+      return;
+    }
     // debugPrint('Interstitial: showAd() called');
     if (_interstitialAd != null) {
       _showLoadedAd(onAdDismissed);

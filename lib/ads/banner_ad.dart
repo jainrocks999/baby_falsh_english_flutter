@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:baby_flash_apps/ads/ads_enabled.dart';
 import 'package:baby_flash_apps/core/constants/ads_unit_key.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -29,11 +30,29 @@ class _BannerAdSectionState extends State<BannerAdSection> {
   @override
   void initState() {
     super.initState();
-    _loadBannerAd();
+    AdsEnabled.debugEnabled.addListener(_onAdsToggled);
+    if (AdsEnabled.isEnabled) {
+      _loadBannerAd();
+    }
+  }
+
+  void _onAdsToggled() {
+    if (!mounted) return;
+    if (AdsEnabled.isEnabled) {
+      _loadBannerAd();
+    } else {
+      _retryTimer?.cancel();
+      _retryTimer = null;
+      _bannerAd?.dispose();
+      setState(() {
+        _bannerAd = null;
+        _isLoaded = false;
+      });
+    }
   }
 
   void _loadBannerAd() {
-    if (!mounted) return;
+    if (!mounted || !AdsEnabled.isEnabled) return;
 
     _retryTimer?.cancel();
     _retryTimer = null;
@@ -109,6 +128,7 @@ class _BannerAdSectionState extends State<BannerAdSection> {
 
   @override
   void dispose() {
+    AdsEnabled.debugEnabled.removeListener(_onAdsToggled);
     _retryTimer?.cancel();
     _retryTimer = null;
 

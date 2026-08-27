@@ -355,12 +355,17 @@ class ImageGridState extends State<ImageGrid> {
         if (!mounted) return;
 
         if (sound != null) {
-          await _audioPlayer.play(AssetSource('files/$langName/$sound'));
-          try {
-            await _audioPlayer.onPlayerComplete.first.timeout(
-              const Duration(seconds: 8),
-            );
-          } catch (_) {}
+          for (final path in AppHelpers.soundAssetPaths(langName, sound)) {
+            try {
+              await _audioPlayer.play(AssetSource(path));
+              await _audioPlayer.onPlayerComplete.first.timeout(
+                const Duration(seconds: 8),
+              );
+              break;
+            } catch (e) {
+              debugPrint("Sound skip $path: $e");
+            }
+          }
         }
       } catch (e) {
         debugPrint("Audio error: $e");
