@@ -86,7 +86,9 @@ flutter:
     - assets/files/italian/
     - assets/files/japanies/
     - assets/files/spanish/
+    - assets/files/arabic/
     - assets/database/babyFlashMultiLangapp.db
+    - assets/database/eFlashArabic.db
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:baby_flash_apps/ads/banner_ad.dart';
 import 'package:baby_flash_apps/ads/interstitail_ad_service.dart';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/core/utils/helper.dart';
 import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
@@ -316,26 +317,20 @@ class ImageSliderState extends State<ImageSlider> {
       try {
         if (token != _playToken) return;
 
-        final langName = AppHelpers.getLanguageFolder(item['language_name']);
+        final langName = AppLanguageConfig.soundFolder;
+        final actualSound = AppHelpers.normalizeSoundFile(item['actualsound']);
+        final sound = AppHelpers.normalizeSoundFile(item['sound']);
 
-        final actualSound = langName == 'japanies'
-            ? item['actualsound']?.replaceAll('-', '_')
-            : item['actualsound'];
-        final sound = langName == 'english'
-            ? item['sound']
-            : item['sound']?.replaceAll(' ', '_');
-
-        if (actualSound != null &&
-            actualSound.toString().isNotEmpty &&
-            actualSound.toString() != '0') {
-          if (token != _playToken) return;
-          await _audioPlayer.play(AssetSource('files/$langName/$actualSound'));
-
+        if (actualSound != null) {
           try {
+            if (token != _playToken) return;
+            await _audioPlayer.play(AssetSource('files/$langName/$actualSound'));
             await _audioPlayer.onPlayerComplete.first.timeout(
               const Duration(seconds: 8),
             );
-          } catch (_) {}
+          } catch (e) {
+            debugPrint("ActualSound error: $e");
+          }
           if (token != _playToken) {
             await _audioPlayer.stop();
             return;
@@ -344,13 +339,15 @@ class ImageSliderState extends State<ImageSlider> {
 
         if (!mounted || token != _playToken) return;
 
-        if (sound != null && sound.toString().isNotEmpty) {
-          await _audioPlayer.play(AssetSource('files/$langName/$sound'));
+        if (sound != null) {
           try {
+            await _audioPlayer.play(AssetSource('files/$langName/$sound'));
             await _audioPlayer.onPlayerComplete.first.timeout(
               const Duration(seconds: 8),
             );
-          } catch (_) {}
+          } catch (e) {
+            debugPrint("Sound error: $e");
+          }
           if (token != _playToken) {
             await _audioPlayer.stop();
             return;

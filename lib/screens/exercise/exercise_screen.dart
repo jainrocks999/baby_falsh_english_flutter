@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:baby_flash_apps/ads/banner_ad.dart';
 import 'package:baby_flash_apps/ads/interstitail_ad_service.dart';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/core/utils/helper.dart';
 import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
@@ -96,9 +97,7 @@ class _ExerciseScreenState extends ConsumerState<ExerciseScreen> {
         : [];
     final randomItems = cachedRandomItems!;
 
-    final langName = AppHelpers.getLanguageFolder(
-      randomItems[0]['language_name'],
-    );
+    final langName = AppLanguageConfig.soundFolder;
     final bool isTablet = ResponsiveUtils.isTablet(context);
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
@@ -344,11 +343,8 @@ class ImageGridState extends State<ImageGrid> {
       try {
         await _audioPlayer.stop();
 
-        final langName = AppHelpers.getLanguageFolder(item['language_name']);
-
-        final sound = langName == 'english'
-            ? item['sound']
-            : item['sound']?.replaceAll(' ', '_');
+        final langName = AppLanguageConfig.soundFolder;
+        final sound = AppHelpers.normalizeSoundFile(item['sound']);
 
         await _audioPlayer.play(AssetSource('helpers/clickon.mp3'));
         try {
@@ -358,7 +354,7 @@ class ImageGridState extends State<ImageGrid> {
         } catch (_) {}
         if (!mounted) return;
 
-        if (sound != null && sound.toString().isNotEmpty) {
+        if (sound != null) {
           await _audioPlayer.play(AssetSource('files/$langName/$sound'));
           try {
             await _audioPlayer.onPlayerComplete.first.timeout(

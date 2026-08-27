@@ -4,6 +4,7 @@ enum AppLanguage {
   italian,
   japanese,
   spanish,
+  arabic,
 }
 
 class AppAdUnits {
@@ -26,7 +27,7 @@ class AppAdUnits {
 /// Android Manifest `APPLICATION_ID` still set manually.
 class AppLanguageConfig {
   /// 👇 Only this line needs to change before a new APK build.
-  static const AppLanguage language = AppLanguage.english;
+  static const AppLanguage language = AppLanguage.arabic;
 
   static String get tableName {
     switch (language) {
@@ -40,8 +41,38 @@ class AppLanguageConfig {
         return 'tbl_japanies';
       case AppLanguage.spanish:
         return 'tbl_spanish';
+      case AppLanguage.arabic:
+        return 'tbl_items';
     }
   }
+
+  static String get soundFolder {
+    switch (language) {
+      case AppLanguage.english:
+        return 'english';
+      case AppLanguage.french:
+        return 'french';
+      case AppLanguage.italian:
+        return 'italian';
+      case AppLanguage.japanese:
+        return 'japanies';
+      case AppLanguage.spanish:
+        return 'spanish';
+      case AppLanguage.arabic:
+        return 'arabic';
+    }
+  }
+
+  static String get databaseAsset {
+    switch (language) {
+      case AppLanguage.arabic:
+        return 'assets/database/eFlashArabic.db';
+      default:
+        return 'assets/database/babyFlashMultiLangapp.db';
+    }
+  }
+
+  static String get databaseFileName => databaseAsset.split('/').last;
 
   static bool get isJapanese => language == AppLanguage.japanese;
 
@@ -62,6 +93,8 @@ class AppLanguageConfig {
         return 'assets/images/languages/japanese.png';
       case AppLanguage.spanish:
         return 'assets/images/languages/spanish.png';
+      case AppLanguage.arabic:
+        return 'assets/images/languages/english.png';
     }
   }
 
@@ -95,6 +128,12 @@ class AppLanguageConfig {
       bannerIos: 'PASTE_SPANISH_BANNER_IOS',
       interstitialAndroid: 'PASTE_SPANISH_INTERSTITIAL_ANDROID',
       interstitialIos: 'PASTE_SPANISH_INTERSTITIAL_IOS',
+    ),
+    AppLanguage.arabic: AppAdUnits(
+      bannerAndroid: 'PASTE_ARABIC_BANNER_ANDROID',
+      bannerIos: 'PASTE_ARABIC_BANNER_IOS',
+      interstitialAndroid: 'PASTE_ARABIC_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_ARABIC_INTERSTITIAL_IOS',
     ),
   };
 

@@ -122,6 +122,7 @@ class DbNotifier extends StateNotifier<DbState> {
         random: random,
         limit: limit,
       );
+      debugPrint("result==>>>> $result");
       state = state.copyWith(isLoading: false, data: result, isSuccess: true);
     } catch (e) {
       debugPrint('error of Fetch Data $e');
