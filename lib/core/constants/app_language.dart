@@ -94,7 +94,7 @@ class AppLanguageConfig {
       case AppLanguage.spanish:
         return 'assets/images/languages/spanish.png';
       case AppLanguage.arabic:
-        return 'assets/images/languages/english.png';
+        return 'assets/images/languages/arabic.png';
     }
   }
 
