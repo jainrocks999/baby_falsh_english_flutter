@@ -130,10 +130,10 @@ class AppLanguageConfig {
       interstitialIos: 'PASTE_SPANISH_INTERSTITIAL_IOS',
     ),
     AppLanguage.arabic: AppAdUnits(
-      bannerAndroid: 'PASTE_ARABIC_BANNER_ANDROID',
-      bannerIos: 'PASTE_ARABIC_BANNER_IOS',
-      interstitialAndroid: 'PASTE_ARABIC_INTERSTITIAL_ANDROID',
-      interstitialIos: 'PASTE_ARABIC_INTERSTITIAL_IOS',
+      bannerAndroid: 'ca-app-pub-6121378252341914/3037393697',
+      bannerIos: 'ca-app-pub-6121378252341914/2652154382',
+      interstitialAndroid: 'ca-app-pub-6121378252341914/4768900464',
+      interstitialIos: 'ca-app-pub-6121378252341914/1608761954',
     ),
   };
 
