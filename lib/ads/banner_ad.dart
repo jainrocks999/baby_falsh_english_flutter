@@ -175,7 +175,7 @@ class _BannerAdSectionState extends State<BannerAdSection> {
 
     return SizedBox(
       width: double.infinity,
-      height: _bannerAd!.size.height.toDouble(),
+      height:64,// _bannerAd!.size.height.toDouble(),
       child: AdWidget(
         ad: _bannerAd!,
       ),
