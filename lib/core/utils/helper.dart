@@ -1,5 +1,6 @@
 // import 'dart:math';
 
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:baby_flash_apps/screens/setting/settings_screen.dart';
 import 'package:baby_flash_apps/widgets/activity_complete_modal.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,10 @@ class AppHelpers {
     );
   }
 
-  static String getLanguageFolder(String langName) {
+  static String getLanguageFolder(String? langName) {
+    if (langName == null || langName.trim().isEmpty) {
+      return AppLanguageConfig.soundFolder;
+    }
     switch (langName.toLowerCase()) {
       case 'fre/fra':
         return 'french';
@@ -28,9 +32,30 @@ class AppHelpers {
         return 'spanish';
       case 'en':
         return 'english';
+      case 'ru':
+      case 'rus':
+      case 'russian':
+      case 'rusian':
+        return 'rusian';
       default:
         return 'japanies';
     }
+  }
+
+  static String? normalizeSoundFile(dynamic name) {
+    if (name == null) return null;
+    final value = name.toString().trim();
+    if (value.isEmpty || value == '0') return null;
+    return value.replaceAll(' ', '_').replaceAll('-', '_');
+  }
+
+  static List<String> soundAssetPaths(String folder, String fileName) {
+    final names = <String>{
+      fileName,
+      fileName.replaceAll('_', ' '),
+      fileName.replaceAll(' ', '_'),
+    };
+    return [for (final name in names) 'files/$folder/$name'];
   }
 
   static String getModifiedImgName({

@@ -4,6 +4,7 @@ enum AppLanguage {
   italian,
   japanese,
   spanish,
+  russian,
 }
 
 class AppAdUnits {
@@ -21,12 +22,12 @@ class AppAdUnits {
 }
 
 /// Change [language] once, then build the APK.
-
-/// This sets table, badge, and ad unit IDs automatically.
+///
+/// This sets table, badge, sounds DB, and ad unit IDs automatically.
 /// Android Manifest `APPLICATION_ID` still set manually.
 class AppLanguageConfig {
   /// 👇 Only this line needs to change before a new APK build.
-  static const AppLanguage language = AppLanguage.spanish;
+  static const AppLanguage language = AppLanguage.russian;
 
   static String get tableName {
     switch (language) {
@@ -40,8 +41,38 @@ class AppLanguageConfig {
         return 'tbl_japanies';
       case AppLanguage.spanish:
         return 'tbl_spanish';
+      case AppLanguage.russian:
+        return 'tbl_items';
     }
   }
+
+  static String get soundFolder {
+    switch (language) {
+      case AppLanguage.english:
+        return 'english';
+      case AppLanguage.french:
+        return 'french';
+      case AppLanguage.italian:
+        return 'italian';
+      case AppLanguage.japanese:
+        return 'japanies';
+      case AppLanguage.spanish:
+        return 'spanish';
+      case AppLanguage.russian:
+        return 'rusian';
+    }
+  }
+
+  static String get databaseAsset {
+    switch (language) {
+      case AppLanguage.russian:
+        return 'assets/database/eFlashRussian.db';
+      default:
+        return 'assets/database/babyFlashMultiLangapp.db';
+    }
+  }
+
+  static String get databaseFileName => databaseAsset.split('/').last;
 
   static bool get isJapanese => language == AppLanguage.japanese;
 
@@ -62,6 +93,8 @@ class AppLanguageConfig {
         return 'assets/images/languages/japanese.png';
       case AppLanguage.spanish:
         return 'assets/images/languages/spanish.png';
+      case AppLanguage.russian:
+        return 'assets/images/languages/russian.png';
     }
   }
 
@@ -95,6 +128,12 @@ class AppLanguageConfig {
       bannerIos: 'ca-app-pub-6121378252341914/1213864493',
       interstitialAndroid: 'ca-app-pub-6121378252341914/3874802378',
       interstitialIos: 'ca-app-pub-6121378252341914/7119078666',
+    ),
+    AppLanguage.russian: AppAdUnits(
+      bannerAndroid: 'PASTE_RUSSIAN_BANNER_ANDROID',
+      bannerIos: 'PASTE_RUSSIAN_BANNER_IOS',
+      interstitialAndroid: 'PASTE_RUSSIAN_INTERSTITIAL_ANDROID',
+      interstitialIos: 'PASTE_RUSSIAN_INTERSTITIAL_IOS',
     ),
   };
 

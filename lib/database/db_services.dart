@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:baby_flash_apps/core/constants/app_language.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -14,12 +15,10 @@ class DatabaseService {
 
   static Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'babyFlashMultiLangapp.db');
+    final path = join(dbPath, AppLanguageConfig.databaseFileName);
 
     if (!await File(path).exists()) {
-      ByteData data = await rootBundle.load(
-        'assets/database/babyFlashMultiLangapp.db',
-      );
+      ByteData data = await rootBundle.load(AppLanguageConfig.databaseAsset);
 
       List<int> bytes = data.buffer.asUint8List(
         data.offsetInBytes,
