@@ -1,3 +1,4 @@
+import 'package:baby_flash_apps/ads/ads_enabled.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/router/app_router.dart';
 import 'package:baby_flash_apps/services/music_services.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   );
 
   await MobileAds.instance.initialize();
+  await AdsEnabled.load();
 
   runApp(
     const ProviderScope(

@@ -1,8 +1,10 @@
+import 'package:baby_flash_apps/ads/ads_enabled.dart';
 import 'package:baby_flash_apps/core/utils/responsive.dart';
 import 'package:baby_flash_apps/database/db_provider.dart';
 import 'package:baby_flash_apps/services/secure_storage.dart';
 import 'package:baby_flash_apps/widgets/custom_switch.dart';
 import 'package:baby_flash_apps/widgets/setting_container.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool sound = false;
   bool randomOrder = false;
   bool swipe = false;
+  bool adsEnabled = true;
 
   @override
   void initState() {
@@ -31,12 +34,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final musicValue = await SecureStorage.getMusic();
     final soundValue = await SecureStorage.getSound();
     final swipeValue = await SecureStorage.getSwipe();
+    final adsValue = kDebugMode ? AdsEnabled.value : true;
 
     setState(() {
       questionMode = questionModeValue;
       music = musicValue;
       sound = soundValue;
       swipe = swipeValue;
+      adsEnabled = adsValue;
     });
   }
 
@@ -139,6 +144,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               await SecureStorage.setSound(val);
                             },
                           ),
+                          if (kDebugMode)
+                            _SwitchRow(
+                              icon: Icons.ads_click_rounded,
+                              title: "Ads (debug)",
+                              value: adsEnabled,
+                              onChanged: (val) async {
+                                setState(() => adsEnabled = val);
+                                await AdsEnabled.set(val);
+                              },
+                            ),
                         ],
                       ),
                     ),

@@ -7,6 +7,7 @@ class SecureStorage {
   static const musicKey = 'MUSIC';
   static const soundKey = 'SOUND';
   static const swipeKey = 'SWIPE';
+  static const adsEnabledKey = 'ADS_ENABLED';
 
   static Future<void> setQuestionMode(bool value) async {
     await _storage.write(key: quesModeKey, value: value.toString());
@@ -22,6 +23,10 @@ class SecureStorage {
 
   static Future<void> setSwipe(bool value) async {
     await _storage.write(key: swipeKey, value: value.toString());
+  }
+
+  static Future<void> setAdsEnabled(bool value) async {
+    await _storage.write(key: adsEnabledKey, value: value.toString());
   }
 
   static Future<bool> getQuesMode() async {
@@ -41,6 +46,12 @@ class SecureStorage {
 
   static Future<bool> getSwipe() async {
     final value = await _storage.read(key: swipeKey);
+    return value == null ? true : value == 'true';
+  }
+
+  /// Debug-only preference. Defaults to ads ON.
+  static Future<bool> getAdsEnabled() async {
+    final value = await _storage.read(key: adsEnabledKey);
     return value == null ? true : value == 'true';
   }
 }
