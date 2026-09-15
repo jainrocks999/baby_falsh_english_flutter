@@ -14,7 +14,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool questionMode = false;
   bool music = false;
   bool sound = false;
   bool randomOrder = false;
@@ -27,13 +26,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> loadSettings() async {
-    final questionModeValue = await SecureStorage.getQuesMode();
     final musicValue = await SecureStorage.getMusic();
     final soundValue = await SecureStorage.getSound();
     final swipeValue = await SecureStorage.getSwipe();
 
     setState(() {
-      questionMode = questionModeValue;
       music = musicValue;
       sound = soundValue;
       swipe = swipeValue;
@@ -157,43 +154,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         children: [
                           _SwitchRow(
-                            title: "Question mode",
-                            value: questionMode,
+                            icon: Icons.swipe,
+                            title: "Swipe",
+                            value: swipe,
                             onChanged: (val) async {
-                              setState(() => questionMode = val);
-                              await SecureStorage.setQuestionMode(val);
-                              await SecureStorage.setSwipe(false);
-                              ref.read(dbProvider.notifier).loadQuestionMode();
+                              setState(() => swipe = val);
+                              await SecureStorage.setSwipe(val);
                             },
                           ),
-
-                          Opacity(
-                            opacity: questionMode ? 0.5 : 1,
-                            child: _SwitchRow(
-                              icon: Icons.swipe,
-                              title: "Swipe",
-                              value: swipe,
-                              onChanged: questionMode
-                                  ? null
-                                  : (val) async {
-                                      setState(() => swipe = val);
-                                      await SecureStorage.setSwipe(val);
-                                    },
-                            ),
-                          ),
-
-                          Opacity(
-                            opacity: questionMode ? 0.5 : 1,
-                            child: _SwitchRow(
-                              icon: Icons.shuffle_rounded,
-                              title: "Random Order",
-                              value: randomOrder,
-                              onChanged: questionMode
-                                  ? null
-                                  : (val) {
-                                      setState(() => randomOrder = val);
-                                    },
-                            ),
+                          _SwitchRow(
+                            icon: Icons.shuffle_rounded,
+                            title: "Random Order",
+                            value: randomOrder,
+                            onChanged: (val) {
+                              setState(() => randomOrder = val);
+                            },
                           ),
                         ],
                       ),

@@ -2,6 +2,7 @@ import 'package:baby_flash_apps/router/route_paths.dart';
 import 'package:baby_flash_apps/screens/detail/playground_screen.dart';
 import 'package:baby_flash_apps/screens/exercise/exercise_screen.dart';
 import 'package:baby_flash_apps/screens/home/home_screen.dart';
+import 'package:baby_flash_apps/screens/memory/memory_game_screen.dart';
 import 'package:baby_flash_apps/screens/setting/settings_screen.dart';
 import 'package:baby_flash_apps/screens/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -47,6 +48,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: RoutePaths.settings,
       builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: RoutePaths.memoryGame,
+      builder: (context, state) {
+        final category = state.extra as String;
+        return MemoryGameScreen(category: category);
+      },
     ),
   ],
 );

@@ -11,6 +11,20 @@ class InterstitialAdService {
 
   VoidCallback? _pendingCallback;
 
+  /// Shared across every screen's [InterstitialAdService] instance so ads
+  /// are throttled app-wide instead of once per screen.
+  static int _opportunityCount = 0;
+  static DateTime? _lastShownAt;
+
+  static const int _showEveryNOpportunities = 3;
+  static const Duration _minGapBetweenAds = Duration(seconds: 45);
+
+  bool get _isWithinCooldown {
+    final lastShownAt = _lastShownAt;
+    if (lastShownAt == null) return false;
+    return DateTime.now().difference(lastShownAt) < _minGapBetweenAds;
+  }
+
   void loadAd() {
     if (_isLoading || _interstitialAd != null) {
       return;
@@ -79,13 +93,18 @@ class InterstitialAdService {
   }
 
   void showAd({VoidCallback? onAdDismissed}) {
-    // debugPrint('Interstitial: showAd() called');
+    _opportunityCount++;
+
+    final isDue = _opportunityCount % _showEveryNOpportunities == 0;
+    if (!isDue || _isWithinCooldown) {
+      onAdDismissed?.call();
+      return;
+    }
+
     if (_interstitialAd != null) {
       _showLoadedAd(onAdDismissed);
       return;
     }
-
-    // debugPrint('Interstitial: ad not ready, waiting for load...');
 
     _pendingCallback = onAdDismissed;
 
@@ -105,6 +124,8 @@ class InterstitialAdService {
     _interstitialAd = null;
 
     _pendingCallback = callback;
+
+    _lastShownAt = DateTime.now();
 
     // debugPrint('Interstitial: showing ad...');
 

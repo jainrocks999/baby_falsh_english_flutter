@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
-  const TopBar({super.key, this.showBackButton = false});
+  const TopBar({
+    super.key,
+    this.showBackButton = false,
+    this.showSettingsButton = true,
+  });
 
   final bool showBackButton;
+  final bool showSettingsButton;
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -47,7 +52,7 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : null,
       actions: [
-        if (!isDetail)
+        if (!isDetail && showSettingsButton)
           IconElevatedBtn(
             size: ResponsiveUtils.width(context, isTablet ? 12 : 18),
             assetPath: 'assets/svgs/setting_btn.svg',

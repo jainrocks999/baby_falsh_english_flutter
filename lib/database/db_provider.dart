@@ -14,7 +14,6 @@ class DbState {
   final bool isSuccess;
   final List<Map<String, dynamic>> data;
   final Map<String, int> categoryCounts;
-  final bool questionMode;
   final bool isSoundOn;
   final bool isMusicOn;
   final bool isShowLangTxt;
@@ -26,7 +25,6 @@ class DbState {
     this.isSuccess = false,
     this.data = const [],
     this.categoryCounts = const {},
-    this.questionMode = false,
     this.isSoundOn = false,
     this.isMusicOn = false,
     this.isShowLangTxt = false,
@@ -39,7 +37,6 @@ class DbState {
     bool? isSuccess,
     List<Map<String, dynamic>>? data,
     Map<String, int>? categoryCounts,
-    bool? questionMode,
     bool? isSoundOn,
     bool? isMusicOn,
     bool? isShowLangTxt,
@@ -51,7 +48,6 @@ class DbState {
       isSuccess: isSuccess ?? this.isSuccess,
       data: data ?? this.data,
       categoryCounts: categoryCounts ?? this.categoryCounts,
-      questionMode: questionMode ?? this.questionMode,
       isSoundOn: isSoundOn ?? this.isSoundOn,
       isMusicOn: isMusicOn ?? this.isMusicOn,
       isShowLangTxt: isShowLangTxt ?? this.isShowLangTxt,
@@ -75,16 +71,6 @@ class DbNotifier extends StateNotifier<DbState> {
       message: null,
       isSuccess: false,
     );
-  }
-
-  Future<void> loadQuestionMode() async {
-    try {
-      final value = await SecureStorage.getQuesMode();
-
-      state = state.copyWith(questionMode: value);
-    } catch (e) {
-      state = state.copyWith(message: e.toString());
-    }
   }
 
   Future<void> loadSoundSettings() async {

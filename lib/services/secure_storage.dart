@@ -3,14 +3,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorage {
   static const _storage = FlutterSecureStorage();
 
-  static const quesModeKey = 'QUESMODE';
   static const musicKey = 'MUSIC';
   static const soundKey = 'SOUND';
   static const swipeKey = 'SWIPE';
-
-  static Future<void> setQuestionMode(bool value) async {
-    await _storage.write(key: quesModeKey, value: value.toString());
-  }
 
   static Future<void> setMusic(bool value) async {
     await _storage.write(key: musicKey, value: value.toString());
@@ -22,11 +17,6 @@ class SecureStorage {
 
   static Future<void> setSwipe(bool value) async {
     await _storage.write(key: swipeKey, value: value.toString());
-  }
-
-  static Future<bool> getQuesMode() async {
-    final value = await _storage.read(key: quesModeKey);
-    return value == null ? false : value == 'true';
   }
 
   static Future<bool> getMusic() async {
